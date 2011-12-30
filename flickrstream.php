@@ -1,7 +1,7 @@
 <?php
 
 // uses the photostream of a user or list of users
-// last modified august 29, 2011
+// last modified december 30, 2011
 
 class FlickrStream extends Flickr {
 
@@ -21,14 +21,14 @@ class FlickrStream extends Flickr {
 					'per_page' => ($num > 0 ? $num : null),
 					'extras' => "url_$size"
 				);
-				$fl = $this->fetch_flickr("flickr.photos.search", $args);
-				foreach ($fl['photo'] as $photo) {
+				$fl = $this->fetch_flickr("flickr.photos.getRecent", $args);
+				foreach ($fl['photos']['photo'] as $photo) {
 					$photos[] = $photo;
 					if ($num > 0 && count($photos) >= $num) {
 						break 3;
 					}
 				}
-			} while ($fl['pages'] > $page++);
+			} while ($num > 0 && $fl['pages'] > $page++);
 		}
 		return $photos;
 	}

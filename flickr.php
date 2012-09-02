@@ -1,14 +1,14 @@
 <?php
 
 // flickr api fetcher
-// last modified sept 15, 2011
+// last modified september 2, 2012
 
 abstract class Flickr {
 
 	protected $apikey;
 	protected $sourceid;
 	
-	private $sizes = array('sq', 't', 's', 'm', 'z', 'l', 'o');
+	private $sizes = array('sq', 'q', 't', 's', 'n', 'm', 'z', 'c', 'l', 'h', 'k', 'o');
 	
 	abstract protected function fetch_photos($size, $num);
 
@@ -57,9 +57,8 @@ abstract class Flickr {
 		if ($fl['stat'] == 'fail') {
 			return 0;
 		}
-
 		$size_index = array_search($size, $this->sizes);
-		$photo = $fl['sizes']['size'][($size_index === false) ? 2 : $size_index];
+		$photo = $fl['sizes']['size'][($size_index === false) ? 1 : $size_index];
 
 		$photos = $this->get_photo_ids();
 		$key = array_search($id, $photos);
